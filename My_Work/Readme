@@ -1,0 +1,74 @@
+Hello Professor,
+
+I have posted 3-VM project's ScreenShots in my repository.
+
+For the 4VM project, I put every Screenshots in #4-VM folder
+
+  The idea is,
+  for up to 1000 hosts, we can have 2^10=1024 hosts, in which we can use 1024-2=1022..
+  for up to 200 hosts, we can have 2^8=256 hosts, in which we can use 256-2=254..
+  for up to 60 hosts, we can have 2^6=64 hosts, in which we can use 64-2=62..
+  
+  For netmask in 1000 hosts, we have to take 10 bits of zeros continuously..
+    Means netmask = 255.255.252.0
+    So that we can have 32-10=22 continuously ones.
+    
+  For netmask in 200 hosts, we have to take 8 bits of zeros continuously..
+    Means netmask = 255.255.255.0
+    So that we can have 32-8=24 continuously ones.
+    
+  For netmask in 60 hosts, we have to take 6 bits of zeros continuously..
+    Means netmask = 255.255.255.192
+    So that we can have 32-6=26 continuously ones.
+   
+  So with the help of above information and the given Diagram,
+    We basically need #3 networks, #3 hosts and #1 router.
+   
+    Host #1 : 
+      Virtual Machine : 1
+      Adapter Port : eth1
+      Adapter Name : ethernet2
+      Network : 172.17.200.0
+      Netmask : 255.255.252.0
+      Minimum Host ip : 172.17.200.1
+      
+    Host #2 : 
+      Virtual Machine : 3
+      Adapter Port : eth0
+      Adapter Name : ethernet3
+      Network : 185.90.80.0
+      Netmask : 255.255.255.0
+      Minimum Host ip : 185.90.80.1
+    
+    Host #3 : 
+      Virtual Machine : 4
+      Adapter Port : eth0
+      Adapter Name : ethernet4
+      Network : 20.30.40.0
+      Netmask : 255.255.255.192
+      Minimum Host ip : 20.30.40.1
+      
+    Router #1 : 
+      Virtual Machine : 2
+      Adapter Port : eth0
+        Adapter Name : ethernet2
+        Maximum ip : 172.17.200.254
+        Netmask : 255.255.252.0
+      Adapter Port : eth1
+        Adapter Name : ethernet3
+        Maximum ip : 185.90.80.254
+        Netmask : 255.255.255.0
+      Adapter Port : eth2
+        Adapter Name : ethernet4
+        Maximum ip : 20.30.40.62
+        Netmask : 255.255.255.192
+        
+        
+  Using these data, we can build the desire Network.    
+
+  To make this working properly, Router(vm-2) has to have complete routing table. And for that, 
+we have to first transmit the data from each of the VMs'. So that router can forword the acknowledgment also..
+
+
+Regards,
+Kishan Shah
